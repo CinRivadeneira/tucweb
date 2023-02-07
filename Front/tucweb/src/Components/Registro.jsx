@@ -1,7 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 import "../Css/Registro.css";
+import {register} from "../service/apiCall"
 
 const Registro = () => {
+    const [formValues, setFormValues] = useState({
+        firstname: "",
+        email: "",
+        password: ""
+    });
+
+
+    const handleChange = (event) =>{
+        setFormValues({
+            ...formValues,
+            [event.target.name]: event.target.value
+        })
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const saveUser = () =>{
+            register(formValues).then(() => {
+                console.log("Registrado");
+            }).catch((error) => alert("Error al registrar"));
+        }
+        saveUser();
+    }
 
 
 
@@ -11,7 +35,7 @@ const Registro = () => {
                 <div className="login-container">
                     <div className="register">
                         <h2>Registrarse</h2>
-                        <form>
+                        <form onSubmit={handleSubmit}>
                             <div className="mb-3">
                                 <b>Nombre</b>
                                 <input
@@ -19,7 +43,8 @@ const Registro = () => {
                                     className="nombre"
                                     placeholder="Ingrese su nombre"
                                     name="firstname"
-
+                                    value={formValues.firstname}
+                                    onChange={handleChange}
                                     required
                                 />
                             </div>
@@ -28,10 +53,10 @@ const Registro = () => {
                                 <input
                                     type="email"
                                     className="correo"
-                                    placeholder="example@example.com"
+                                    placeholder="example@example.com.ar"
                                     name="email"
-
-
+                                    value={formValues.email}
+                                    onChange={handleChange}
                                     required
                                 />
                             </div>
@@ -43,8 +68,8 @@ const Registro = () => {
                                     className="pass"
                                     placeholder="Ingrese su contraseña"
                                     name="password"
-
-
+                                    value={formValues.password}
+                                    onChange={handleChange}
                                     required
                                 />
                             </div>
@@ -76,3 +101,4 @@ const Registro = () => {
 }
 
 export default Registro;
+
