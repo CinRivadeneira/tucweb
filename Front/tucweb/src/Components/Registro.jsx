@@ -29,6 +29,35 @@ const Registro = () => {
 
 
 
+    
+
+    const Login = () => {
+        const [formValues, setFormValues] = useState({
+            email: "",
+            password: ""
+        });
+    
+    
+        const handleChange = (event) =>{
+            setFormValues({
+                ...formValues,
+                [event.target.name]: event.target.value
+            })
+        }
+    
+        const handleSubmit = (event) => {
+            event.preventDefault();
+            const getUser = () =>{
+                login(formValues).then(() => {
+                    console.log("Logueado");
+                }).catch((error) => alert("Error al loguear"));
+            }
+            getUser();
+        }
+    
+
+
+
     return (
         <div className="contenedor">
             <div className="container">
@@ -83,12 +112,18 @@ const Registro = () => {
                             type="text"
                             placeholder="Usuario"
                             className="usuario"
+                            name="mail"
+                            value={formValues.mail}
+                            onChange={handleChange}
                             required
                         />
                         <input
                             type="password"
                             placeholder="Contraseña"
                             className="contraseña"
+                            name="pass"
+                            value={formValues.pass}
+                            onChange={handleChange}
                             required
                         />
                         <br />
@@ -99,6 +134,6 @@ const Registro = () => {
         </div>
     )
 }
+}
 
 export default Registro;
-
